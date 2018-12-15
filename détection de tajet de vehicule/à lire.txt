@@ -1,0 +1,4 @@
+détection de trajet d'une vehicule au niveau de  video : 
+ file:  video detection de trajet.py 
+dossier
+ tajet detection image : traitement nécessaire pour faire la detection de tajet dans une image 

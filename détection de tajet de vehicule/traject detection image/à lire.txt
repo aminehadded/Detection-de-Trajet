@@ -1,0 +1,11 @@
+Ce code permet la détection de bordure de la rue ce n'est pas toute la rue mais que la partie dans laquelle la Vehicule  ou l'objet va se déplacer(leur trajet).
+language de programmation : python (les bibliothèques: numpy, opencv, matplotlib) 
+
+les dossiers: toutes les explications sont introduites de chaque partie 
+
+
+Part 1: détection des bordures de l'image test image et extraction de la zone d'intérêt 
+part 2: application et affichage de ses lignes telles qu'elles sont sur l'image original test image 
+full code : contient toutes les parties de développement. (optimisation de l'algorithme et de l'affichage de lignes )
+
+voir l'image explicative "explication"  pour plus des détailles 

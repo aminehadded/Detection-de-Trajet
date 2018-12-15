@@ -1,0 +1,50 @@
+**aprés les traitements de l'image par  filtrage, détection de contourde l'image avec filter de canny 
+
+def canny (image):
+    gray = cv2.cvtColor(lane_image, cv2.COLOR_RGB2GRAY)  #conversion de RGB -> gray
+    blur = cv2.GaussianBlur(gray, (5, 5), 0)  # appliquer un filtre gaussian de taille 5*5 afin de minimiser les bruits 
+    canny = cv2.Canny(blur, 50, 150) #gradiant pour la détection de changement de luminosité
+    return canny
+
+**on fait l'extraction de region de l'interet (on fait l'affichage de l'image aprés détection des contours avec plot afin de connaitre les coordonnées de partie d'interet) 
+
+
+def region_of_interet (image):   #creation de la mask et application de lamasque à l'image filtrée 
+    height = image.shape[0]
+    polygone = np.array([[(200, height), (1100, height), (550, 250)]])      # les coordonnées de polygone 
+    mask = np.zeros_like(image)    #arriere plan noire afin de valider la neutralité 
+    cv2.fillPoly(mask, polygone, 255)                                                                          #Mask contain the polygone in white et le reste en noir 
+    masked_image = cv2.bitwise_and(image, mask)    #ET logique entre le mask et l'image qu'on va traiter et dans notre cas c'est l'image filtrer par canny 
+    return masked_image, mask
+
+
+
+**Aprés l'extraction :
+
+lignes = cv2.HoughLinesP(masked_image, 2, np.pi/180, 100, np.array([]), minLineLength=40, maxLineGap=5)
+
+on utilise une  resolution de 2 pixels et 1 radiant pour la détection des lignes 
+ cv2.HoughLines : permet d'extraire les coordonnées des lignes qui coupent minimum 100 points et ayant des longueurs supérieur à 40 , et  un max distance de séparation de 5 pixels pour lier deux lignes .
+
+
+
+-on applique ces coordonnées à une fonction qui permet le tracage de tous les lignes sur un arrière plan noir 
+
+def afficher_lignes(images, lignes):
+    ligne=np.zeros_like(image)
+    if lignes is not None:
+        for line in lignes:
+            x1, y1, x2, y2 = line.reshape(4)
+            cv2.line(ligne, (x1, y1), (x2, y2), (0, 255, 0), 8)
+    return ligne
+
+                                                                                                                  voir l'image "detection des lignes (region d'interet) "
+
+
+
+** on trace tous ces lignes sur l'image originale 
+
+ligne_image = afficher_lignes(canny, lignes)
+ligne_original= cv2.addWeighted(ligne_image, 0.8, image, 1, 1) # l'element neutre dans l'addition est le zéro c'est pour cela on choisit  un arrière pan noir à laquel on trace les lignes 
+
+                                                                                                                 voir l'image "lignes sur l'images originale"

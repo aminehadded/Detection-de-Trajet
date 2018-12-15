@@ -1,0 +1,11 @@
+Le code est en Python.
+L'image traitée est nommée: test_image
+
+les étapes de traitement :
+1-Lecture de l'image
+2-convertion de l'image en gray 
+3-Filtrage de l'image par gaussian (afin de minimiser les bruits)
+4- Detection des contours par filter de canny ( voir image "detection de bordure")
+5-Extration d'une partie de l'image filtrée (zone d'interet)  (voir image "masked-image") par canny par un mask(voir image "mask") les traitements sur cette partie sont illustrés dans la deuscième partie :Part2
+
+
